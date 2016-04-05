@@ -16,20 +16,30 @@
 package com.stratio.sparta.serving.api
 
 import akka.event.slf4j.SLF4JLogging
+import com.stratio.sparta.driver.SpartaJob
+import com.stratio.sparta.driver.factory.SparkContextFactory
 import com.stratio.sparta.serving.api.helpers.SpartaHelper
 import com.stratio.sparta.serving.core.SpartaConfig
 import com.stratio.sparta.serving.core.constants.AppConstant
+import com.stratio.sparta.serving.core.models.{SpartaSerializer, AggregationPoliciesModel}
+import org.apache.spark.{SparkContext, SparkConf}
+import org.json4s.native.Serialization.{read, write}
 
 /**
  * Entry point of the application.
  */
-object Sparta extends App with SLF4JLogging {
+object Sparta extends App with SLF4JLogging with SpartaSerializer {
 
-  SpartaConfig.initMainConfig()
-  SpartaConfig.initDAOs
-  SpartaConfig.initApiConfig()
-  SpartaConfig.initSprayConfig()
-  SpartaConfig.initSwaggerConfig()
-  SpartaHelper.initAkkaSystem(AppConstant.ConfigAppName)
-  SpartaHelper.initPolicyContextStatus
+//  val string = scala.io.Source.fromFile("/home/anistal/Downloads/websocket-to-mongo.json").mkString
+
+  val string = scala.io.Source.fromFile("/tmp/policy.json").mkString
+  val conf = new SparkConf().setAppName("Simple Application").setMaster("local[*]")
+  val sc = new SparkContext(conf)
+
+  val policy = read[AggregationPoliciesModel](string)
+  val spartaJob = new SpartaJob(policy)
+
+  SparkContextFactory.setSparkContext(sc)
+
+  spartaJob.run(sc)
 }

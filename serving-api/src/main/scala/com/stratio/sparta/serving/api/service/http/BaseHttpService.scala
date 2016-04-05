@@ -23,7 +23,7 @@ import com.stratio.sparta.serving.core.models.SpartaSerializer
 import spray.httpx.Json4sJacksonSupport
 import spray.routing._
 
-import scala.concurrent.ExecutionContextExecutor
+import scala.concurrent.{ExecutionContext, ExecutionContextExecutor}
 import scala.concurrent.duration._
 
 /**
@@ -33,7 +33,7 @@ trait BaseHttpService extends HttpService with Json4sJacksonSupport with SLF4JLo
 
   implicit val timeout: Timeout = Timeout(15.seconds)
 
-  implicit def executionContext: ExecutionContextExecutor = actorRefFactory.dispatcher
+  implicit def executionContext: ExecutionContext = actorRefFactory.dispatcher
 
   implicit val actors: Map[String, ActorRef]
 

@@ -37,7 +37,7 @@ import scala.util.{Failure, Success}
 
 @Api(value = HttpConstant.FragmentPath, description = "Operations over fragments: inputs and outputs that will be " +
   "included in a policy")
-trait FragmentHttpService extends BaseHttpService with OauthClient with PolicyUtils {
+trait FragmentHttpService extends BaseHttpService with PolicyUtils {
 
   override def routes: Route =
     findByTypeAndId ~ findAllByType ~ create ~ update ~ deleteByTypeAndId ~ findByTypeAndName

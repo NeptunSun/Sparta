@@ -30,6 +30,8 @@
             <groupId>com.stratio.sparta</groupId>
             <artifactId>plugins</artifactId>
         </dependency>
+
+
         <dependency>
             <groupId>com.stratio.sparta</groupId>
             <artifactId>sdk</artifactId>
@@ -58,6 +60,12 @@
             <groupId>org.apache.hadoop</groupId>
             <artifactId>hadoop-common</artifactId>
             <version>2.6.0-cdh5.6.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.servlet</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.github.fge</groupId>

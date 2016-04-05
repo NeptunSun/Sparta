@@ -92,6 +92,8 @@ class SpartaJob(policy: AggregationPoliciesModel) extends SLF4JLogging {
         cubesTriggersOutputs
       ).write(aggregatedData)
     }
+    ssc.get.start()
+    ssc.get.awaitTermination()
     ssc.get
   }
 }
